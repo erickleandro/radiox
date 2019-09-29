@@ -27,4 +27,12 @@ Route::middleware(['web', 'auth'])->group(function () {
 	Route::get('programa/{id}/alterar', 'ProgramaController@alterar');
 	Route::post('programa/{id}/atualizar', 'ProgramaController@atualizar')->name('atualizar-programa');
 	Route::post('programa/{id}/excluir', 'ProgramaController@excluir')->name('excluir-programa');
+
+	// Locutores
+	Route::get('locutor', 'LocutorController@index')->name('locutor');
+	Route::get('locutor/cadastrar', 'LocutorController@cadastrar');
+	Route::post('locutor/registrar', 'LocutorController@registrar')->name('registrar-locutor');
+	Route::get('locutor/{id}/alterar', 'LocutorController@alterar');
+	Route::post('locutor/{id}/atualizar', 'LocutorController@atualizar')->name('atualizar-locutor');
+	Route::post('locutor/{id}/excluir', 'LocutorController@excluir')->name('excluir-locutor');
 });

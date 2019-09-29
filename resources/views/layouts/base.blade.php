@@ -130,6 +130,12 @@
             Programas
           </a>
         </li>
+        <li>
+          <a href="{{ route('locutor') }}">
+            <i class="fa fa-group"></i>
+            Locutores
+          </a>
+        </li>
       </ul>
     </section>
     <!-- /.sidebar -->

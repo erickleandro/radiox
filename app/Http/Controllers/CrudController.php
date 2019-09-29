@@ -25,6 +25,12 @@ class CrudController extends Controller
 	{
 		$this->data["{$this->nomeSingular}"] = null;
 
+		if ($this->relacionamentos) {
+			foreach ($this->relacionamentos as $key => $model) {
+				$this->data["{$key}"] = (new $model())->all();
+			}
+		}
+
 		return view("admin.{$this->nomePlural}.form", $this->data);
 	}
 
@@ -54,6 +60,12 @@ class CrudController extends Controller
 	protected function alterar($id)
 	{
 		$this->data["{$this->nomeSingular}"] = $this->model->find($id);
+
+		if ($this->relacionamentos) {
+			foreach ($this->relacionamentos as $key => $model) {
+				$this->data["{$key}"] = (new $model())->all();
+			}
+		}
 
 		return view("admin.{$this->nomePlural}.form", $this->data);
 	}
