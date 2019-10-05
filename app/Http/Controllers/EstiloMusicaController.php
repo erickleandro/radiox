@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Programa;
+use App\Models\EstiloMusical;
 use App\Http\Controllers\CrudController;
 
-class ProgramaController extends CrudController
+class EstiloMusicalController extends CrudController
 {
     protected $nome;
     protected $model;
@@ -15,8 +15,8 @@ class ProgramaController extends CrudController
 
     public function __construct()
     {
-        $this->nomeSingular = 'programa';
-        $this->nomePlural = 'programas';
-        $this->model = new Programa();
+        $this->nomeSingular = 'estilo';
+        $this->nomePlural = 'estilos_musicais';
+        $this->model = new EstiloMusical();
     }
 }

@@ -6,31 +6,28 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use \DB;
 
-class Programa extends Model
+class Evento extends Model
 {
 	use SoftDeletes;
 	
-    protected $table = 'programas';
+    protected $table = 'eventos';
 
-    protected $fillable = ['nome'];
-
-    public function locutor()
-    {
-    	return $this->hasOne('App\Models\Locutor', 'programa_id');
-    }
+    protected $fillable = ['artista', 'data', 'local'];
 
     public function registrar($request)
     {
         DB::beginTransaction();
 
-        $programa = $this;
+        $evento = $this;
 
         if ($request->id) {
-            $programa = $this->find($request->id);
+            $evento = $this->find($request->id);
         }
 
-    	$programa->nome = $request->nome;
-        $programa->save();
+        $evento->artista = $request->artista;
+        $evento->data = $request->data;
+    	$evento->local = $request->local;
+        $evento->save();
 
         DB::commit();
     	

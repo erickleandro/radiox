@@ -125,6 +125,12 @@
           </a>
         </li>
         <li>
+          <a href="{{ route('estilo-musical') }}">
+            <i class="fa fa-group"></i>
+            Estilos Musicais
+          </a>
+        </li>
+        <li>
           <a href="{{ route('programa') }}">
             <i class="fa fa-group"></i>
             Programas
@@ -134,6 +140,30 @@
           <a href="{{ route('locutor') }}">
             <i class="fa fa-group"></i>
             Locutores
+          </a>
+        </li>
+        <li>
+          <a href="{{ route('musica') }}">
+            <i class="fa fa-group"></i>
+            Músicas
+          </a>
+        </li>
+        <li>
+          <a href="{{ route('foto') }}">
+            <i class="fa fa-group"></i>
+            Galeria de fotos
+          </a>
+        </li>
+        <li>
+          <a href="{{ route('evento') }}">
+            <i class="fa fa-group"></i>
+            Eventos
+          </a>
+        </li>
+        <li>
+          <a href="{{ route('mural') }}">
+            <i class="fa fa-group"></i>
+            Mural
           </a>
         </li>
       </ul>

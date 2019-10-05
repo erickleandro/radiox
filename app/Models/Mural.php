@@ -6,31 +6,29 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use \DB;
 
-class Programa extends Model
+class Mural extends Model
 {
 	use SoftDeletes;
 	
-    protected $table = 'programas';
+	protected $table = 'mural';
 
-    protected $fillable = ['nome'];
-
-    public function locutor()
-    {
-    	return $this->hasOne('App\Models\Locutor', 'programa_id');
-    }
+	protected $fillable = ['nome', 'email', 'mensagem', 'aprovado'];
 
     public function registrar($request)
     {
         DB::beginTransaction();
 
-        $programa = $this;
+        $mural = $this;
 
         if ($request->id) {
-            $programa = $this->find($request->id);
+            $mural = $this->find($request->id);
         }
 
-    	$programa->nome = $request->nome;
-        $programa->save();
+        $mural->nome = $request->nome;
+        $mural->email = $request->email;
+        $mural->mensagem = $request->mensagem;
+    	$mural->aprovado = $request->aprovado;
+        $mural->save();
 
         DB::commit();
     	

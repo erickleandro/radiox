@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace App\Models;
 
@@ -9,35 +9,37 @@ use \DB;
 class EstiloMusical extends Model
 {
 	use SoftDeletes;
-
+	
 	protected $table = 'estilos_musicais';
 
-	public function locutores()
-	{
-		return $this->belongsToMany('App\Models\Locutor', 'locutores_estilos_musicais');
-	}
+	protected $fillable = ['nome'];
 
-	public function registrar($request)
-	{
-		DB::beginTransaction();
+    public function locutores()
+    {
+    	return $this->belongsToMany('App\Models\EstiloMusical', 'locutores_estilos_musicais');
+    }
 
-		$estilo = $this;
+    public function registrar($request)
+    {
+        DB::beginTransaction();
 
-		if ($request->id) {
-			$estilo = $this->find($request->id);
-		}
+        $estilo = $this;
 
-		$estilo->nome = $request->nome;
-		$estilo->save();
+        if ($request->id) {
+            $estilo = $this->find($request->id);
+        }
 
-		DB::commit();
+    	$estilo->nome = $request->nome;
+        $estilo->save();
 
-		return true;
-	}
+        DB::commit();
+    	
+    	return true;
+    }
 
-	public function excluir($id)
-	{
-		$this->find($id)->delete();
-		return true;
-	}
+    public function excluir($id)
+    {
+        $this->find($id)->delete();
+        return true;
+    }
 }

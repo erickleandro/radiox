@@ -11,6 +11,7 @@
 <meta name="description" content="">
 <meta name="author" content="webthemez.com">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="csrf-token" content="{{ csrf_token() }}">
 <title>{{ config('app.name') }}</title>
 <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
 <link rel="stylesheet" href="/assets/css/flexslider.css">
@@ -64,24 +65,28 @@
                 <p class="wow fadeInDown animated">Confira a nossa programação</p>
             </div>
     <div class="row"> 
-      <div class="col-md-4 col-sm-6 services text-center"> <span class="icon icon-recycle"></span>
-        <div class="services-content">
-          <h5>Albuns de fotos</h5>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis eu libero scelerisque ligula sagittis faucibus eget quis lacus.</p>
+      @foreach($programas as $programa)
+        <div class="col-md-4 col-sm-6 services text-center"> 
+          @if ($loop->index == 0)
+            <span class="icon icon-recycle"></span>
+          @endif
+
+          @if ($loop->index == 1)
+            <span class="icon icon-heart"></span>
+          @endif
+
+          @if ($loop->index == 2)
+            <span class="icon icon-megaphone"></span>
+          @endif
+
+          <div class="services-content">
+            <h5>{{ $programa->nome }}</h5>
+            @if ($programa->locutor)
+              <p>Apresentação por {{ $programa->locutor->nome }}</p>
+            @endif
+          </div>
         </div>
-      </div>
-      <div class="col-md-4 col-sm-6 services text-center"> <span class="icon icon-heart"></span>
-        <div class="services-content">
-          <h5>MUSIC PLAYLIST</h5>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis eu libero scelerisque ligula sagittis faucibus eget quis lacus.</p>
-        </div>
-      </div> 
-      <div class="col-md-4 col-sm-6 services text-center"> <span class="icon icon-megaphone"></span>
-        <div class="services-content">
-          <h5>GALLERY</h5>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis eu libero scelerisque ligula sagittis faucibus eget quis lacus.</p>
-        </div>
-      </div> 
+      @endforeach
     </div>
   </div>
 </section>
@@ -147,70 +152,24 @@
             </div>
     <div class="row">  
             <div class="col-md-6">
-            
-            	<div class="package wow fadeInLeft animated" data-wow-offset="250" data-wow-delay="200ms">
-                	<h5>Earth Alive</h5>
+              @foreach($recados->slice(0, 3) as $recado)
+              	<div class="package wow fadeInLeft animated" data-wow-offset="250" data-wow-delay="200ms">
+                	<h5>{{ $recado->nome }}</h5>
                     <ul class="list-default">
-                    	<li>Lorem ipsum dolor sit amet, consectetur</li>
-                    	<li>adipiscing eliteger gravida velit quis dolo</li>
-                    	<li>Pellentesque elit tortor</li>
+                    	<li>{{ $recado->mensagem }}</li>
                     </ul>
-                    <strong class="price"><small>$</small>38</strong>
                 </div><!-- end package -->
-                
-                <div class="package wow fadeInLeft animated" data-wow-offset="200" data-wow-delay="300m">
-                	<h5>Light Blue</h5>
-                    <ul class="list-default">
-                    	<li>Lorem ipsum dolor sit amet, consectetur</li>
-                    	<li>adipiscing eliteger gravida velit quis dolo</li>
-                    	<li>Pellentesque elit tortor</li>
-                    </ul>
-                    <strong class="price"><small>$</small>75</strong>
-                </div><!-- end package -->
-                
-                <div class="package no-border wow fadeInLeft animated" data-wow-offset="150" data-wow-delay="400m" >
-                	<h5>Rock n Roll</h5>
-                    <ul class="list-default">
-                    	<li>Lorem ipsum dolor sit amet, consectetur</li>
-                    	<li>adipiscing eliteger gravida velit quis dolo</li>
-                    	<li>Pellentesque elit tortor</li>
-                    </ul>
-                    <strong class="price"><small>$</small>46</strong>
-                </div><!-- end package -->
-                
+              @endforeach
             </div><!-- end col-md-6 -->
             <div class="col-md-6">
-            
-            	<div class="package wow fadeInRight animated" data-wow-offset="250" data-wow-delay="500m" >
-                	<h5>Love Life</h5>
+              @foreach($recados->slice(3, 6) as $recado)
+                <div class="package wow fadeInLeft animated" data-wow-offset="250" data-wow-delay="200ms">
+                  <h5>{{ $recado->nome }}</h5>
                     <ul class="list-default">
-                    	<li>Lorem ipsum dolor sit amet, consectetur</li>
-                    	<li>adipiscing eliteger gravida velit quis dolo</li>
-                    	<li>Pellentesque elit tortor</li>
+                      <li>{{ $recado->mensagem }}</li>
                     </ul>
-                    <strong class="price"><small>$</small>15</strong>
                 </div><!-- end package -->
-                
-                <div class="package wow fadeInRight animated" data-wow-offset="200" data-wow-delay="600m">
-                	<h5>Back Street</h5>
-                    <ul class="list-default">
-                    	<li>Lorem ipsum dolor sit amet, consectetur</li>
-                    	<li>adipiscing eliteger gravida velit quis dolo</li>
-                    	<li>Pellentesque elit tortor</li>
-                    </ul>
-                    <strong class="price"><small>$</small>84</strong>
-                </div><!-- end package -->
-                
-                <div class="package no-border wow fadeInRight animated" data-wow-offset="150" data-wow-delay="700m">
-                	<h5>Golden Days</h5>
-                    <ul class="list-default">
-                    	<li>Lorem ipsum dolor sit amet, consectetur</li>
-                    	<li>adipiscing eliteger gravida velit quis dolo</li>
-                    	<li>Pellentesque elit tortor</li>
-                    </ul>
-                    <strong class="price"><small>$</small>95</strong>
-                </div><!-- end package -->
-                
+              @endforeach
             </div><!-- end col-md-6 -->
         </div><!-- end row -->    
   </div>
@@ -225,70 +184,22 @@
                 <p class="wow fadeInDown animated">Veja o que aconteceu</p>
             </div>
     <div class="row no-gutter">
-      <div class="col-lg-3 col-md-6 col-sm-6 work"> <a href="images/portfolio/01.jpg" class="work-box"> <img src="/assets/images/portfolio/01.jpg" alt="">
-        <div class="overlay">
-          <div class="overlay-caption">
-             <p><span class="icon icon-magnifying-glass"></span></p>
-          </div>
+      @foreach ($fotos as $foto)
+        <div class="col-lg-3 col-md-6 col-sm-6 work"> 
+          <a href="{{ asset("storage/$foto->arquivo") }}" class="work-box"> 
+            <img src="{{ asset("storage/$foto->arquivo") }}" alt="" style="width: 320px !important; height: 213px !important">
+            <div class="overlay">
+              <div class="overlay-caption">
+               <p>
+                  <span class="icon icon-magnifying-glass">
+                    {{ $foto->nome }}             
+                  </span>
+                </p>
+              </div>
+            </div>
+          </a> 
         </div>
-        <!-- overlay --> 
-        </a> </div>
-      <div class="col-lg-3 col-md-6 col-sm-6 work"> <a href="images/portfolio/02.jpg" class="work-box"> <img src="/assets/images/portfolio/02.jpg" alt="">
-        <div class="overlay">
-          <div class="overlay-caption">
-            <p><span class="icon icon-magnifying-glass"></span></p>
-          </div>
-        </div>
-        <!-- overlay --> 
-        </a> </div>
-      <div class="col-lg-3 col-md-6 col-sm-6 work"> <a href="images/portfolio/03.jpg" class="work-box"> <img src="/assets/images/portfolio/03.jpg" alt="">
-        <div class="overlay">
-          <div class="overlay-caption">
-            <p><span class="icon icon-magnifying-glass"></span></p>
-          </div>
-        </div>
-        <!-- overlay --> 
-        </a> </div>
-      <div class="col-lg-3 col-md-6 col-sm-6 work"> <a href="images/portfolio/04.jpg" class="work-box"> <img src="/assets/images/portfolio/04.jpg" alt="">
-        <div class="overlay">
-          <div class="overlay-caption"> 
-            <p><span class="icon icon-magnifying-glass"></span></p>
-          </div>
-        </div>
-        <!-- overlay --> 
-        </a> </div>
-      <div class="col-lg-3 col-md-6 col-sm-6 work"> <a href="images/portfolio/05.jpg" class="work-box"> <img src="/assets/images/portfolio/05.jpg" alt="">
-        <div class="overlay">
-          <div class="overlay-caption">
-            <p><span class="icon icon-magnifying-glass"></span></p>
-          </div>
-        </div>
-        <!-- overlay --> 
-        </a> </div>
-      <div class="col-lg-3 col-md-6 col-sm-6 work"> <a href="images/portfolio/06.jpg" class="work-box"> <img src="/assets/images/portfolio/06.jpg" alt="">
-        <div class="overlay">
-          <div class="overlay-caption">
-            <p><span class="icon icon-magnifying-glass"></span></p>
-          </div>
-        </div>
-        <!-- overlay --> 
-        </a> </div>
-      <div class="col-lg-3 col-md-6 col-sm-6 work"> <a href="images/portfolio/07.jpg" class="work-box"> <img src="/assets/images/portfolio/07.jpg" alt="">
-        <div class="overlay">
-          <div class="overlay-caption">
-            <p><span class="icon icon-magnifying-glass"></span></p>
-          </div>
-        </div>
-        <!-- overlay --> 
-        </a> </div>
-      <div class="col-lg-3 col-md-6 col-sm-6 work"> <a href="images/portfolio/08.jpg" class="work-box"> <img src="/assets/images/portfolio/08.jpg" alt="">
-        <div class="overlay">
-          <div class="overlay-caption">
-             <p><span class="icon icon-magnifying-glass"></span></p>
-          </div>
-        </div>
-        <!-- overlay --> 
-        </a> </div>
+      @endforeach
     </div>
   </div>
 </section>
@@ -307,33 +218,28 @@
 			</div>
 			<div class="col-md-6">
 				<div class="col-md-11">
-					<h3>Our Tours</h3>
+					<h3>Próximos eventos</h3>
 					<ul class="tour-list">
-						<li>
-							<div class="tour-date">16<span>Feb<br><em>2016</em></span></div>
-							<div class="tour-info">NewYork, US - <a href="#">Music Area</a></div>
-							<div class="tour-ticket"><a href="#">Buy Ticket</a></div>
-						</li>
-						<li>
-							<div class="tour-date">22<span>Mar<br><em>2016</em></span></div>
-							<div class="tour-info">Delhi, Ind - <a href="#">Open Theater</a></div>
-							<div class="tour-ticket"><a href="#">Buy Ticket</a></div>
-						</li>
-						<li>
-							<div class="tour-date">12<span>April<br><em>2016</em></span></div>
-							<div class="tour-info">Texas, US - <a href="#">Eden Gardens</a></div>
-							<div class="tour-ticket"><a href="#">Buy Ticket</a></div>
-						</li>
-						<li>
-							<div class="tour-date">26<span>April<br><em>2016</em></span></div>
-							<div class="tour-info">England, UK - <a href="#">BNK Stadium</a></div>
-							<div class="tour-ticket"><a href="#">Buy Ticket</a></div>
-						</li>
-						<li>
-							<div class="tour-date">10<span>June<br><em>2016</em></span></div>
-							<div class="tour-info">Tokiyo, Japan - <a href="#">KMT Grounds</a></div>
-							<div class="tour-ticket"><a href="#">Buy Ticket</a></div>
-						</li>
+            @foreach($eventos as $evento)
+  						<li>
+  							<div class="tour-date">
+                  {{ date('d', strtotime($evento->data)) }}  
+                  <span> {{ date('M', strtotime($evento->data)) }}
+                    <br>
+                    <em style="display: block">
+                      {{ date('Y', strtotime($evento->data)) }}
+                    </em>
+                  </span>
+                </div>
+
+  							<div class="tour-info">
+                  {{ $evento->local }}
+                </div>
+  							<div class="tour-ticket">
+                  {{ (new \DateTime($evento->horario))->format('H:i') }}  
+                </div>
+  						</li>
+            @endforeach
 					</ul>
 				</div>
 			</div>
@@ -349,62 +255,23 @@
                 <p class="wow fadeInDown animated">Veja quem faz parte da rádio</p>
             </div>
     <div class="row">
-      <div class="col-md-3 col-sm-6">
-        <div class="person"><img src="/assets/images/team-1.jpg" alt="" class="img-responsive">
-          <div class="person-content">
-            <h4>Jonh Dow</h4>
-            <h5 class="role">Founder</h5>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit eget risus vitae massa.</p>
+      @foreach ($locutores as $locutor)
+        <div class="col-md-3 col-sm-6">
+          <div class="person">
+            <img src="{{ asset("storage/$locutor->foto") }}" alt="" class="img-responsive">
+            <div class="person-content">
+              <h4>{{ $locutor->nome }}</h4>
+              <h5 class="role">Locutor</h5>
+              <p>Apresenta o programa {{ $locutor->programa->nome }}</p>
+            </div>
+            <ul class="social-icons clearfix">
+              <li><a href="{{ $locutor->facebook }}"><span class="fa fa-facebook"></span></a></li>
+              <li><a href="{{ $locutor->twitter }}"><span class="fa fa-twitter"></span></a></li> 
+              <li><a href="{{ $locutor->googleplus }}"><span class="fa fa-google-plus"></span></a></li> 
+            </ul>
           </div>
-          <ul class="social-icons clearfix">
-            <li><a href="#"><span class="fa fa-facebook"></span></a></li>
-            <li><a href="#"><span class="fa fa-twitter"></span></a></li> 
-            <li><a href="#"><span class="fa fa-google-plus"></span></a></li> 
-          </ul>
         </div>
-      </div>
-      <div class="col-md-3 col-sm-6">
-        <div class="person"> <img src="/assets/images/team-2.jpg" alt="" class="img-responsive">
-          <div class="person-content">
-            <h4>Markus Linn</h4>
-            <h5 class="role">Music</h5>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit eget risus vitae massa.</p>
-          </div>
-          <ul class="social-icons clearfix">
-            <li><a href="#" class=""><span class="fa fa-facebook"></span></a></li>
-            <li><a href="#" class=""><span class="fa fa-twitter"></span></a></li> 
-            <li><a href="#" class=""><span class="fa fa-google-plus"></span></a></li> 
-          </ul>
-        </div>
-      </div>
-      <div class="col-md-3 col-sm-6">
-        <div class="person"> <img src="/assets/images/team-3.jpg" alt="" class="img-responsive">
-          <div class="person-content">
-            <h4>Chris Jemes</h4>
-            <h5 class="role">Singer</h5>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit eget risus vitae massa.</p>
-          </div>
-          <ul class="social-icons clearfix">
-            <li><a href="#" class=""><span class="fa fa-facebook"></span></a></li>
-            <li><a href="#" class=""><span class="fa fa-twitter"></span></a></li> 
-            <li><a href="#" class=""><span class="fa fa-google-plus"></span></a></li> 
-          </ul>
-        </div>
-      </div>
-      <div class="col-md-3 col-sm-6">
-        <div class="person"> <img src="/assets/images/team-4.jpg" alt="" class="img-responsive">
-          <div class="person-content">
-            <h4>Vintes Mars</h4>
-            <h5 class="role">Singler</h5>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit eget risus vitae massa.</p>
-          </div>
-          <ul class="social-icons clearfix">
-            <li><a href="#" class=""><span class="fa fa-facebook"></span></a></li>
-            <li><a href="#" class=""><span class="fa fa-twitter"></span></a></li> 
-            <li><a href="#" class=""><span class="fa fa-google-plus"></span></a></li> 
-          </ul>
-        </div>
-      </div>
+      @endforeach
     </div>
   </div>
 </section>
@@ -413,16 +280,17 @@
 <section id="contact" class="section">
   <div class="container">
       <div class="section-header">
-                <h2 class="wow fadeInDown animated">Mural de recados</h2>
-                <p class="wow fadeInDown animated">Deixe sua mensagem</p>
-            </div>
+          <h2 class="wow fadeInDown animated">Mural de recados</h2>
+          <p class="wow fadeInDown animated">Deixe sua mensagem</p>
+          <ul id="errors" style="padding-left: 0"></ul>
+      </div>
     <div class="row">
       <div class="col-md-8 col-md-offset-2 conForm">       
         <div id="message"></div>
-        <form method="post" action="php/contact.php" name="cform" id="cform">
-          <input name="name" id="name" type="text" class="col-xs-12 col-sm-12 col-md-12 col-lg-12" placeholder="Seu nome..." >
+        <form id="form">
+          <input name="nome" id="nome" type="text" class="col-xs-12 col-sm-12 col-md-12 col-lg-12" placeholder="Seu nome..." >
           <input name="email" id="email" type="email" class=" col-xs-12 col-sm-12 col-md-12 col-lg-12 noMarr" placeholder="E-mail (opcional)" >
-          <textarea name="comments" id="comments" cols="" rows="" class="col-xs-12 col-sm-12 col-md-12 col-lg-12" placeholder="Mensagem..."></textarea>
+          <textarea name="mensagem" id="mensagem" cols="" rows="" class="col-xs-12 col-sm-12 col-md-12 col-lg-12" placeholder="Mensagem..."></textarea>
           <input type="submit" id="submit" name="send" class="submitBnt" value="Enviar">
           <div id="simple-msg"></div>
         </form>
@@ -463,86 +331,33 @@
 <script src="/assets/js/retina.min.js"></script> 
 <script src="/assets/js/modernizr.js"></script> 
 <script src="/assets/js/main.js"></script> 
+<script src="/js/ajax.js"></script> 
 <script type="text/javascript" src="/assets/js/jquery.contact.js"></script> 
 
 <script type="text/javascript" src="/assets/jPlayer-2.9.2/dist/jplayer/jquery.jplayer.min.js"></script>
 <script type="text/javascript" src="/assets/jPlayer-2.9.2/dist/add-on/jplayer.playlist.min.js"></script> 
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/8.11.8/sweetalert2.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/8.11.8/sweetalert2.min.js"></script>
 <script type="text/javascript">
 //<![CDATA[
-$(document).ready(function(){
+$(document).ready(function() {
+
+  $("#form").on('submit', function (e) {
+    e.preventDefault();
+    ajax("{{ route('publicar-mural') }}", 'POST', '#form', "{{ route('site') }}");
+  });
  
 	new jPlayerPlaylist({
 		jPlayer: "#jquery_jplayer_2",
 		cssSelectorAncestor: "#jp_container_2"
 	}, [
+    @foreach ($musicas as $musica)
 		{
-			title:"Cro Magnon Man",
-			mp3:"http://www.jplayer.org/audio/mp3/TSP-01-Cro_magnon_man.mp3",
-			oga:"http://www.jplayer.org/audio/ogg/TSP-01-Cro_magnon_man.ogg"
+			title: "{{ $musica->artista }} - {{ $musica->nome }}",
+			mp3: "{{ asset("storage/{$musica->arquivo}") }}",
+			oga: ""
 		},
-		{
-			title:"Your Face",
-			mp3:"http://www.jplayer.org/audio/mp3/TSP-05-Your_face.mp3",
-			oga:"http://www.jplayer.org/audio/ogg/TSP-05-Your_face.ogg"
-		},
-		{
-			title:"Cyber Sonnet",
-			mp3:"http://www.jplayer.org/audio/mp3/TSP-07-Cybersonnet.mp3",
-			oga:"http://www.jplayer.org/audio/ogg/TSP-07-Cybersonnet.ogg"
-		},
-		{
-			title:"Tempered Song",
-			mp3:"http://www.jplayer.org/audio/mp3/Miaow-01-Tempered-song.mp3",
-			oga:"http://www.jplayer.org/audio/ogg/Miaow-01-Tempered-song.ogg"
-		},
-		{
-			title:"Hidden",
-			mp3:"http://www.jplayer.org/audio/mp3/Miaow-02-Hidden.mp3",
-			oga:"http://www.jplayer.org/audio/ogg/Miaow-02-Hidden.ogg"
-		},
-		{
-			title:"Lentement",
-			free:true,
-			mp3:"http://www.jplayer.org/audio/mp3/Miaow-03-Lentement.mp3",
-			oga:"http://www.jplayer.org/audio/ogg/Miaow-03-Lentement.ogg"
-		},
-		{
-			title:"Lismore",
-			mp3:"http://www.jplayer.org/audio/mp3/Miaow-04-Lismore.mp3",
-			oga:"http://www.jplayer.org/audio/ogg/Miaow-04-Lismore.ogg"
-		},
-		{
-			title:"The Separation",
-			mp3:"http://www.jplayer.org/audio/mp3/Miaow-05-The-separation.mp3",
-			oga:"http://www.jplayer.org/audio/ogg/Miaow-05-The-separation.ogg"
-		},
-		{
-			title:"Beside Me",
-			mp3:"http://www.jplayer.org/audio/mp3/Miaow-06-Beside-me.mp3",
-			oga:"http://www.jplayer.org/audio/ogg/Miaow-06-Beside-me.ogg"
-		},
-		{
-			title:"Bubble",
-			free:true,
-			mp3:"http://www.jplayer.org/audio/mp3/Miaow-07-Bubble.mp3",
-			oga:"http://www.jplayer.org/audio/ogg/Miaow-07-Bubble.ogg"
-		},
-		{
-			title:"Stirring of a Fool",
-			mp3:"http://www.jplayer.org/audio/mp3/Miaow-08-Stirring-of-a-fool.mp3",
-			oga:"http://www.jplayer.org/audio/ogg/Miaow-08-Stirring-of-a-fool.ogg"
-		},
-		{
-			title:"Partir",
-			free: true,
-			mp3:"http://www.jplayer.org/audio/mp3/Miaow-09-Partir.mp3",
-			oga:"http://www.jplayer.org/audio/ogg/Miaow-09-Partir.ogg"
-		},
-		{
-			title:"Thin Ice",
-			mp3:"http://www.jplayer.org/audio/mp3/Miaow-10-Thin-ice.mp3",
-			oga:"http://www.jplayer.org/audio/ogg/Miaow-10-Thin-ice.ogg"
-		}
+    @endforeach
 	], {
 		swfPath: "../../dist/jplayer",
 		supplied: "oga, mp3",

@@ -3,61 +3,69 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use \DB;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Locutor extends Model
 {
-	use SoftDeletes;
+    use SoftDeletes;
+    
+    protected $table = 'locutores';
+    protected $fillable = [
+    	'nome',
+        'programa_id',
+    	'facebook',
+    	'twitter',
+    	'googleplus',
+        'biografia',
+    ];
 
-	protected $table = 'locutores';
+    public function programa()
+    {
+    	return $this->belongsTo('App\Models\Programa');
+    }
 
-	public function programa()
-	{
-		return $this->belongsTo('App\Models\Programa');
-	}
+    public function estilos()
+    {
+    	return $this->belongsToMany('App\Models\EstiloMusical', 'locutores_estilos_musicais');
+    }
 
-	public function estilos()
-	{
-		return $this->belongsToMany('App\Models\EstiloMusical', 'locutores_estilos_musicais');
-	}
+    public function registrar($request)
+    {
+        DB::beginTransaction();
 
-	public function registrar($request)
-	{
-		DB::beginTransaction();
+        $locutor = $this;
 
-		$locutor = $this;
+        if ($request->id) {
+            $locutor = $this->find($request->id);
+        }
 
-		if ($request->id) {
-			$locutor = $this->find($request->id);
-		}
+    	$locutor->nome = $request->nome;
+        $locutor->programa_id = $request->programa_id;
+        $locutor->facebook = $request->facebook;
+        $locutor->twitter = $request->twitter;
+        $locutor->googleplus = $request->googleplus;
+        $locutor->biografia = $request->biografia;        
+        $locutor->save();
 
-		$locutor->nome = $request->nome;
-		$locutor->programa_id = $request->programa_id;
-		$locutor->facebook = $request->facebook;
-		$locutor->googleplus = $request->googleplus;
-		$locutor->twitter = $request->twitter;
-		$locutor->biografia = $request->biografia;
-		$locutor->save();
+        if ($request->estilos) {
+            $locutor->estilos()->sync($request->estilos);    
+        }
+        
+        if ($request->foto) {
+            $foto = $request->foto->store('locutores');
+            $locutor->foto = $foto;    
+            $locutor->save();
+        }
 
-		if ($request->estilos) {
-			$locutor->estilos()->sync($request->estilos);
-		}
+        DB::commit();
+    	
+    	return true;
+    }
 
-		if ($request->foto) {
-			$foto = $request->foto->store('locutores');
-			$locutor->foto = $foto;
-			$locutor->save();
-		}
-
-		DB::commit();
-
-		return true;
-	}
-
-	public function excluir($id)
-	{
-		$this->find($id)->delete();
-		return true;
-	}
+    public function excluir($id)
+    {
+        $this->find($id)->delete();
+        return true;
+    }
 }
